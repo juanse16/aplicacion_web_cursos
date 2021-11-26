@@ -1,0 +1,12 @@
+git init
+git status
+git add .
+git commit -m "se agrega proyecto"
+git config --global user.emai juanse_0903@hotmail.com
+git config --global user.name juanse16
+
+git commit -m "se agrega proyecto"
+git branch -M main 
+
+git remote add origin https://github.com/juanse16/aplicacion_web_cursos.git
+git push -u origin main

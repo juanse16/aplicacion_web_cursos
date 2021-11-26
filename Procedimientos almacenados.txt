@@ -1,0 +1,70 @@
+procedimientos almacenados
+
+Insertar =========================================================
+CREATE PROCEDURE spInsertarPrueba
+(@nombre VARCHAR(50),
+@age INT,
+@mensaje VARCHAR(100) OUTPUT)
+AS 
+
+
+BEGIN
+
+INSERT INTO tbpruebas (id,name,age) values (default,@nombre,@age) 
+set @mensaje = 'Prueba creado correctamente'
+END  
+
+IF @@ERROR !=0
+BEGIN
+set @mensaje = 'Se presento un error inesperado'
+END
+
+Editar =============================================================================
+USE [bdWeb]
+GO
+
+CREATE PROCEDURE spModificarPrueba
+(@id uniqueidentifier,
+@nombre VARCHAR(50),
+@age INT,
+@mensaje VARCHAR(100) OUTPUT)
+AS 
+
+BEGIN
+UPDATE tbpruebas set name = @nombre, age=@age WHERE id=@id;
+SET @mensaje = 'Usuario actualizado con exito'
+END
+
+IF @@ERROR !=0
+BEGIN
+set @mensaje = 'Se presento un error inesperado'
+END
+
+
+Eliminar ==============================================================================
+
+CREATE PROCEDURE spConsultarPrueba
+(@id uniqueidentifier,
+@mensaje VARCHAR(100) OUTPUT)
+AS 
+
+IF NOT EXISTS(SELECT 1 FROM tbpruebas WHERE id = @id)
+BEGIN
+	SET @mensaje = 'El cliente NO existe'
+END
+ELSE
+BEGIN
+	DELETE FROM tbpruebas WHERE id=@id;
+	SET @mensaje = 'Se elimino correctamente'
+END
+
+IF @@ERROR !=0
+BEGIN
+set @mensaje = 'Se presento un error inesperado'
+END
+
+consultar =========================================================================
+CREATE PROCEDURE spConsultarPrueba
+(@id uniqueidentifier)
+AS
+SELECT id, name, age FROM tbPruebas WHERE id = @id;
